@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <style>
+        .br2{
+            margin-top: 1em;
+        }
+        .panel {
+            background-color: whitesmoke;
+            padding: 10px;
+            box-shadow: 5px 5px 8px #888888;
+
+        }
+        body{
+            background-image: url("https://cdn.hipwallpaper.com/i/97/64/sbJT4W.jpg");
+        }
+    </style>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjqGDyRHh16Dp3FFyxI4VxJ810rUV6ldm2Cw&usqp=CAU" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/main/">Dashboard</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/traffic/1">LiveTraffic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/threats/1">Threats</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/engine/">RuleEngine</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/report/">ReportManagement</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">LogOut</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xl-6 order-0">
+                <div class="panel">
+                    <canvas id="myChart"></canvas>
+                    <script>
+                        $.getJSON('http://localhost:8080/stats1', function (data) {
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: [data.s1_attack_type0, data.s1_attack_type1, data.s1_attack_type2, data.s1_attack_type3],
+                                    datasets: [{
+                                        label: '# of suspicious Request per Attack type',
+                                        data: [data.s1_count0, data.s1_count1, data.s1_count2, data.s1_count3],
+                                        backgroundColor: [
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                        ],
+                                        borderColor: [
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </div> <!-- ATTACK TYPE COUNT - HISTOGRAM -->
+        <div class="col-xl-6 order-1">
+            <div class="panel" id="right">
+                <canvas id="myChart2"></canvas>
+                <script>
+                    $.getJSON('http://localhost:8080/stats2', function (data) {
+                        var ctx = document.getElementById('myChart2').getContext('2d');
+                        var myChart2 = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Attack', 'Normal'],
+                                datasets: [{
+                                    label: 'Normal traffic vs Attack',
+                                    data: [data.s2_suspicious, data.s2_all],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(75, 192, 192, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    });
+
+                </script>
+            </div>
+        </div> <!-- NORMAL / ATTACK TRAFFIC - PIE CHART -->
+    </div>
+    <div class="row br2">
+        <div class="col-xl-6">
+            <div class="panel">
+                <canvas id="myChart3"></canvas>
+                <script>
+                    $.getJSON('http://localhost:8080/stats3', function (data) {
+                        var ctx = document.getElementById('myChart3').getContext('2d');
+                        var myChart3 = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: [data.s3_source_ip0, data.s3_source_ip1],
+                                datasets: [{
+                                    label: 'Dangerous IP adresses',
+                                    data: [data.s3_count0, data.s3_count1],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    });
+
+                </script>
+            </div>
+        </div> <!-- ATTACK FROM IP COUNT - HISTOGRAM -->
+    </div>
+
+</div>
+
+</body>
+</html>
