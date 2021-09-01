@@ -9,5 +9,10 @@ The purpose of the WAIDS was based on the analysis to design an Intrusion Detect
 |WAIDS - Thesis.pdf | Thesis containing information about the project, including detailed description, workflow, diagrams, used technologies etc. (Slovak language) |
 |request_agent.cpp  | C++ source code for intercepting chosen interface TCP traffic      |
 |request_agent.conf | Configuration file for request_agent.cpp      |
+### Building
+The building process is written in the WAIDS - Thesis.pdf (Attachment C) among with some other pre-requisities and used technologies necessary for project building and initilization.
+### Configuration
+TODO
+
 
 
